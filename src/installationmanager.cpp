@@ -707,8 +707,10 @@ InstallationResult InstallationManager::install(const QString& fileName,
     } else if (modID != guessedModID) {
       log::debug("passed mod id: {}, guessed id: {}", modID, guessedModID);
     }
-
-    modName.update(guessedModName, GUESS_GOOD);
+    if (Settings::instance().DefaultModNameTweak())
+      modName.update(guessedModName);  // removed the second argument so the filter picks guessedModName as default
+    else
+      modName.update(guessedModName, EGuessQuality(GUESS_GOOD));
   }
 
   m_CurrentFile = fileInfo.absoluteFilePath();

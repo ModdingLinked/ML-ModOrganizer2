@@ -826,6 +826,11 @@ public:
   bool profileLocalInis() const;
   void setProfileLocalInis(bool b);
 
+  // Default mod name tweak
+  //
+  bool DefaultModNameTweak() const;
+  void setDefaultModNameTweak(bool b);
+
   // whether profiles should default to local saves
   //
   bool profileLocalSaves() const;

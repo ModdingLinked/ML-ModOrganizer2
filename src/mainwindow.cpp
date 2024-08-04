@@ -1264,6 +1264,7 @@ void MainWindow::showEvent(QShowEvent* event)
         gameSupportTriggered();
       }
 
+      /* Skip the category setup
       QMessageBox newCatDialog;
       newCatDialog.setWindowTitle(tr("Category Setup"));
       newCatDialog.setText(
@@ -1336,6 +1337,7 @@ void MainWindow::showEvent(QShowEvent* event)
           GlobalSettings::setHideCategoryReminder(true);
         }
       }
+      */
     }
 
     m_OrganizerCore.settings().widgets().restoreIndex(ui->groupCombo);
@@ -2314,7 +2316,7 @@ void MainWindow::helpTriggered()
 
 void MainWindow::wikiTriggered()
 {
-  shell::Open(QUrl("https://modorganizer2.github.io/"));
+  shell::Open(QUrl("stepmodifications.org/wiki/Guide:Mod_Organizer"));
 }
 
 void MainWindow::gameSupportTriggered()
@@ -2324,7 +2326,7 @@ void MainWindow::gameSupportTriggered()
 
 void MainWindow::discordTriggered()
 {
-  shell::Open(QUrl("https://discord.gg/ewUVAqyrQX"));
+  shell::Open(QUrl("https://discord.gg/S99Ary5eba")); //ML discord server
 }
 
 void MainWindow::issueTriggered()

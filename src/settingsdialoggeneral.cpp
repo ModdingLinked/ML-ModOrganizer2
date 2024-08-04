@@ -31,6 +31,7 @@ GeneralSettingsTab::GeneralSettingsTab(Settings& s, SettingsDialog& d)
   ui->automaticArchiveInvalidation->setChecked(settings().profileArchiveInvalidation());
 
   // miscellaneous
+  ui->DefaultModNameTweak->setChecked(settings().DefaultModNameTweak());
   ui->centerDialogs->setChecked(settings().geometry().centerDialogs());
   ui->changeGameConfirmation->setChecked(
       settings().interface().showChangeGameConfirmation());
@@ -76,6 +77,7 @@ void GeneralSettingsTab::update()
       ui->automaticArchiveInvalidation->isChecked());
 
   // miscellaneous
+  settings().setDefaultModNameTweak(ui->DefaultModNameTweak->isChecked());
   settings().geometry().setCenterDialogs(ui->centerDialogs->isChecked());
   settings().interface().setShowChangeGameConfirmation(
       ui->changeGameConfirmation->isChecked());

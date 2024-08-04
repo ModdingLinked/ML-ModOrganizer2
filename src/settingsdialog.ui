@@ -252,6 +252,19 @@
               <property name="bottomMargin">
                <number>9</number>
               </property>
+               <item>
+                 <widget class="QCheckBox" name="DefaultModNameTweak">
+                   <property name="toolTip">
+                     <string>Use the file name as default during installation, instead of the mod's.</string>
+                   </property>
+                   <property name="whatsThis">
+                     <string>Use the file name as default during installation, instead of the mod's.</string>
+                   </property>
+                   <property name="text">
+                     <string>Default mod name tweak</string>
+                   </property>
+                 </widget>
+               </item>
               <item>
                <widget class="QCheckBox" name="centerDialogs">
                 <property name="toolTip">

@@ -244,6 +244,16 @@ void Settings::setProfileArchiveInvalidation(bool b)
   set(m_Settings, "Settings", "profile_archive_invalidation", b);
 }
 
+bool Settings::DefaultModNameTweak() const
+{
+  return get<bool>(m_Settings, "Settings", "default_mod_name_tweak", true);
+}
+
+void Settings::setDefaultModNameTweak(bool b)
+{
+  set(m_Settings, "Settings", "default_mod_name_tweak", b);
+}
+
 bool Settings::useSplash() const
 {
   return get<bool>(m_Settings, "Settings", "use_splash", true);
@@ -1966,7 +1976,7 @@ void NexusSettings::setTrackedIntegration(bool b) const
 
 bool NexusSettings::categoryMappings() const
 {
-  return get<bool>(m_Settings, "Settings", "category_mappings", true);
+  return get<bool>(m_Settings, "Settings", "category_mappings", false);
 }
 
 void NexusSettings::setCategoryMappings(bool b) const

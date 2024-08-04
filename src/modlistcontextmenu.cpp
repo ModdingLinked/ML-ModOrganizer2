@@ -360,9 +360,11 @@ void ModListContextMenu::addCategoryContextMenus(ModInfo::Ptr mod)
 void ModListContextMenu::addOverwriteActions(ModInfo::Ptr mod)
 {
   if (QDir(mod->absolutePath()).count() > 2) {
+    /*
     addAction(tr("Sync to Mods..."), [=]() {
       m_core.syncOverwrite();
     });
+    */
     addAction(tr("Create Mod..."), [=]() {
       m_actions.createModFromOverwrite();
     });
@@ -560,7 +562,7 @@ void ModListContextMenu::addRegularActions(ModInfo::Ptr mod)
     } break;
     }
   }
-
+  /*
   if (mod->nexusId() > 0 &&
       (mod->getNexusCategory() > 0 || !mod->installationFile().isEmpty()) &&
       !mod->isSeparator()) {
@@ -568,6 +570,7 @@ void ModListContextMenu::addRegularActions(ModInfo::Ptr mod)
       m_actions.remapCategory(m_selected);
     });
   }
+  */
 
   if (mod->nexusId() > 0 && Settings::instance().nexus().trackedIntegration()) {
     switch (mod->trackedState()) {

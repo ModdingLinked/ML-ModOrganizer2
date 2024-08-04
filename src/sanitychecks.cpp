@@ -192,7 +192,7 @@ int checkMissingFiles()
 
     if (!file.exists()) {
       log::warn("{}", QObject::tr(
-                          "'%1' seems to be missing, an antivirus may have deleted it")
+                          "'%1' seems to be missing, an antivirus may have deleted it.")
                           .arg(file.absoluteFilePath()));
 
       ++n;
