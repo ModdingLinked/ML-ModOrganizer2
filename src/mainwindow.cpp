@@ -2326,7 +2326,7 @@ void MainWindow::gameSupportTriggered()
 
 void MainWindow::discordTriggered()
 {
-  shell::Open(QUrl("https://discord.gg/S99Ary5eba")); //ML discord server
+  shell::Open(QUrl("https://discord.gg/S99Ary5eba")); // ML Discord server
 }
 
 void MainWindow::issueTriggered()
