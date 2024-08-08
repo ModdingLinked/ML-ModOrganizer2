@@ -3040,8 +3040,7 @@ void MainWindow::updateSortButton()
     ui->sortButton->setToolTip(tr("Sort the plugins using LOOT."));
   } else {
     ui->sortButton->setDisabled(true);
-    ui->sortButton->setToolTip(tr("There is no supported sort mechanism for this game. "
-                                  "You will probably have to use a third-party tool."));
+    ui->sortButton->setToolTip(tr("LOOT sorting is either not supported or recommended for this game. If supported but not recommended, you can choose to enable it in the game's plugin settings."));
   }
 }
 
