@@ -4050,12 +4050,6 @@ You will have to visit the mod page on the %1 Nexus site to change your mind.</s
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="3043"/>
-        <source>LOOT sorting is either not supported or recommended for this game. If supported but not recommended, you can choose to enable it in the game&apos;s plugin settings.</source>
-        <oldsource>LOOT sorting is either not supported or recommended for this game. If supported but not recommended, you can enable it in the game&apos;s plugin settings.</oldsource>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="mainwindow.cpp" line="3139"/>
         <source>None of your %1 mods appear to have had recent file updates.</source>
         <translation type="unfinished"></translation>

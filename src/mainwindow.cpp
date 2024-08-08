@@ -3034,13 +3034,13 @@ void MainWindow::toggleUpdateAction()
 
 void MainWindow::updateSortButton()
 {
-  if (m_OrganizerCore.managedGame()->sortMechanism() !=
-      IPluginGame::SortMechanism::NONE) {
+  if (m_OrganizerCore.managedGame()->sortMechanism() == IPluginGame::SortMechanism::LOOT) {
+    ui->sortButton->setVisible(true);
     ui->sortButton->setEnabled(true);
     ui->sortButton->setToolTip(tr("Sort the plugins using LOOT."));
   } else {
-    ui->sortButton->setDisabled(true);
-    ui->sortButton->setToolTip(tr("LOOT sorting is either not supported or recommended for this game. If supported but not recommended, you can choose to enable it in the game's plugin settings."));
+    ui->sortButton->setVisible(false);
+    ui->sortButton->setEnabled(false);
   }
 }
 
