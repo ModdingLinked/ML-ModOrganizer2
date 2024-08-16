@@ -8387,90 +8387,90 @@ You can restart Mod Organizer as administrator and try launching the program aga
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../uibase/src/utility.cpp" line="63"/>
+        <location filename="../../uibase/src/utility.cpp" line="62"/>
         <source>removal of &quot;%1&quot; failed: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../uibase/src/utility.cpp" line="72"/>
+        <location filename="../../uibase/src/utility.cpp" line="71"/>
         <source>removal of &quot;%1&quot; failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../uibase/src/utility.cpp" line="76"/>
+        <location filename="../../uibase/src/utility.cpp" line="75"/>
         <source>&quot;%1&quot; doesn&apos;t exist (remove)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../uibase/src/utility.cpp" line="351"/>
+        <location filename="../../uibase/src/utility.cpp" line="350"/>
         <source>Error %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../uibase/src/utility.cpp" line="548"/>
-        <location filename="../../uibase/src/utility.cpp" line="571"/>
+        <location filename="../../uibase/src/utility.cpp" line="534"/>
+        <location filename="../../uibase/src/utility.cpp" line="557"/>
         <source>You have an invalid custom browser command in the settings.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../uibase/src/utility.cpp" line="687"/>
-        <location filename="../../uibase/src/utility.cpp" line="716"/>
+        <location filename="../../uibase/src/utility.cpp" line="673"/>
+        <location filename="../../uibase/src/utility.cpp" line="702"/>
         <source>failed to create directory &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../uibase/src/utility.cpp" line="696"/>
-        <location filename="../../uibase/src/utility.cpp" line="723"/>
+        <location filename="../../uibase/src/utility.cpp" line="682"/>
+        <location filename="../../uibase/src/utility.cpp" line="709"/>
         <source>failed to copy &quot;%1&quot; to &quot;%2&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../uibase/src/utility.cpp" line="1122"/>
+        <location filename="../../uibase/src/utility.cpp" line="1113"/>
         <source>%1 B</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../uibase/src/utility.cpp" line="1122"/>
+        <location filename="../../uibase/src/utility.cpp" line="1113"/>
         <source>%1 KB</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../uibase/src/utility.cpp" line="1123"/>
+        <location filename="../../uibase/src/utility.cpp" line="1114"/>
         <source>%1 MB</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../uibase/src/utility.cpp" line="1123"/>
+        <location filename="../../uibase/src/utility.cpp" line="1114"/>
         <source>%1 GB</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../uibase/src/utility.cpp" line="1124"/>
+        <location filename="../../uibase/src/utility.cpp" line="1115"/>
         <source>%1 TB</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../uibase/src/utility.cpp" line="1129"/>
+        <location filename="../../uibase/src/utility.cpp" line="1120"/>
         <source>%1 B/s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../uibase/src/utility.cpp" line="1129"/>
+        <location filename="../../uibase/src/utility.cpp" line="1120"/>
         <source>%1 KB/s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../uibase/src/utility.cpp" line="1130"/>
+        <location filename="../../uibase/src/utility.cpp" line="1121"/>
         <source>%1 MB/s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../uibase/src/utility.cpp" line="1130"/>
+        <location filename="../../uibase/src/utility.cpp" line="1121"/>
         <source>%1 GB/s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../uibase/src/utility.cpp" line="1131"/>
+        <location filename="../../uibase/src/utility.cpp" line="1122"/>
         <source>%1 TB/s</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10466,19 +10466,19 @@ Please open the &quot;Nexus&quot; tab.</source>
 <context>
     <name>uibase</name>
     <message>
-        <location filename="../../uibase/src/utility.cpp" line="1193"/>
+        <location filename="../../uibase/src/utility.cpp" line="1184"/>
         <source>h</source>
         <extracomment>Time remaining hours</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../uibase/src/utility.cpp" line="1196"/>
+        <location filename="../../uibase/src/utility.cpp" line="1187"/>
         <source>m</source>
         <extracomment>Time remaining minutes</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../uibase/src/utility.cpp" line="1199"/>
+        <location filename="../../uibase/src/utility.cpp" line="1190"/>
         <source>s</source>
         <extracomment>Time remaining seconds</extracomment>
         <translation type="unfinished"></translation>
