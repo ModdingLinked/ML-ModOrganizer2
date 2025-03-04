@@ -251,11 +251,14 @@ public:
   QColor modlistOverwritingArchive() const;
   void setModlistOverwritingArchive(const QColor& c);
 
-  QColor modlistContainsPlugin() const;
-  void setModlistContainsPlugin(const QColor& c);
+  QColor modlistContainsFile() const;
+  void setModlistContainsFile(const QColor& c);
 
   QColor pluginListContained() const;
   void setPluginListContained(const QColor& c);
+
+  QColor pluginListMaster() const;
+  void setPluginListMaster(const QColor& c);
 
   std::optional<QColor> previousSeparatorColor() const;
   void setPreviousSeparatorColor(const QColor& c) const;

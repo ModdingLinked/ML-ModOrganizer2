@@ -409,8 +409,14 @@ void MOApplication::externalMessage(const QString& message)
       }
     }
   } else if (isNxmLink(message)) {
-    MessageDialog::showMessage(tr("Download started"), qApp->activeWindow(), false);
-    m_core->downloadRequestedNXM(message);
+    if (m_core == nullptr) {
+      // This can happen if MO2 is started with the --pick option and no instance has
+      // been selected yet.
+      reportError(tr("You need to select an instance before trying to download mods."));
+    } else {
+      MessageDialog::showMessage(tr("Download started"), qApp->activeWindow(), false);
+      m_core->downloadRequestedNXM(message);
+    }
   } else {
     cl::CommandLine cl;
 

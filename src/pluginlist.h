@@ -93,8 +93,12 @@ public:
     COL_FLAGS,
     COL_PRIORITY,
     COL_MODINDEX,
+    COL_FORMVERSION,
+    COL_HEADERVERSION,
+    COL_AUTHOR,
+    COL_DESCRIPTION,
 
-    COL_LASTCOLUMN = COL_MODINDEX
+    COL_LASTCOLUMN = COL_DESCRIPTION,
   };
 
   using PluginStates = MOBase::IPluginList::PluginStates;
@@ -210,6 +214,8 @@ public:
 
   QString getName(int index) const { return m_ESPs.at(index).name; }
   int getPriority(int index) const { return m_ESPs.at(index).priority; }
+  QString getAuthor(int index) const { return m_ESPs.at(index).author; }
+  QString getDescription(int index) const { return m_ESPs.at(index).description; }
   QString getIndexPriority(int index) const;
   bool isESPLocked(int index) const;
   void lockESPIndex(int index, bool lock);
@@ -221,6 +227,8 @@ public:
   //
   void highlightPlugins(const std::vector<unsigned int>& modIndices,
                         const MOShared::DirectoryEntry& directoryEntry);
+
+  void highlightMasters(const QModelIndexList& selectedPluginIndices);
 
   void refreshLoadOrder();
 
@@ -242,7 +250,13 @@ public:
   bool isMasterFlagged(const QString& name) const;
   bool isMediumFlagged(const QString& name) const;
   bool isLightFlagged(const QString& name) const;
+  bool isBlueprintFlagged(const QString& name) const;
   bool hasNoRecords(const QString& name) const;
+
+  int formVersion(const QString& name) const;
+  float headerVersion(const QString& name) const;
+  QString author(const QString& name) const;
+  QString description(const QString& name) const;
 
   boost::signals2::connection onRefreshed(const std::function<void()>& callback);
   boost::signals2::connection
@@ -317,7 +331,7 @@ private:
     ESPInfo(const QString& name, bool forceLoaded, bool forceEnabled,
             bool forceDisabled, const QString& originName, const QString& fullPath,
             bool hasIni, std::set<QString> archives, bool lightSupported,
-            bool mediumSupported);
+            bool mediumSupported, bool blueprintSupported);
 
     QString name;
     QString fullPath;
@@ -335,8 +349,12 @@ private:
     bool isMasterFlagged;
     bool isMediumFlagged;
     bool isLightFlagged;
+    bool isBlueprintFlagged;
     bool hasNoRecords;
     bool modSelected;
+    bool isMasterOfSelectedPlugin;
+    int formVersion;
+    float headerVersion;
     QString author;
     QString description;
     bool hasIni;

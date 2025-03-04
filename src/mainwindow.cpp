@@ -2242,6 +2242,7 @@ void MainWindow::on_tabWidget_currentChanged(int index)
   QWidget* currentWidget = ui->tabWidget->widget(index);
   if (currentWidget == ui->espTab) {
     m_OrganizerCore.refreshESPList();
+    ui->espList->activated();
   } else if (currentWidget == ui->bsaTab) {
     m_OrganizerCore.refreshBSAList();
   } else if (currentWidget == ui->dataTab) {
@@ -3069,12 +3070,14 @@ void MainWindow::nxmEndorsementsAvailable(QVariant userData, QVariant resultData
           ModInfo::getByModID(result->first, result->second.first);
 
       for (auto mod : modsList) {
-        if (result->second.second == "Endorsed")
-          mod->setIsEndorsed(true);
-        else if (result->second.second == "Abstained")
-          mod->setNeverEndorse();
-        else
-          mod->setIsEndorsed(false);
+        if (mod->endorsedState() != EndorsedState::ENDORSED_NEVER) {
+          if (result->second.second == "Endorsed")
+            mod->setIsEndorsed(true);
+          else if (result->second.second == "Abstained")
+            mod->setNeverEndorse();
+          else
+            mod->setIsEndorsed(false);
+        }
       }
 
       if (Settings::instance().nexus().endorsementIntegration()) {

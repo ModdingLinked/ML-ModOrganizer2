@@ -7,6 +7,7 @@
 #include <widgetutility.h>
 
 #include "copyeventfilter.h"
+#include "gameplugins.h"
 #include "genericicondelegate.h"
 #include "mainwindow.h"
 #include "modelutils.h"
@@ -15,6 +16,9 @@
 #include "organizercore.h"
 #include "pluginlistcontextmenu.h"
 #include "pluginlistsortproxy.h"
+#include "shared/directoryentry.h"
+#include "shared/fileentry.h"
+#include "shared/filesorigin.h"
 #include "ui_mainwindow.h"
 
 using namespace MOBase;
@@ -27,6 +31,12 @@ PluginListView::PluginListView(QWidget* parent)
   setVerticalScrollBar(m_Scrollbar);
   MOBase::setCustomizableColumns(this);
   installEventFilter(new CopyEventFilter(this));
+}
+
+void PluginListView::activated()
+{
+  // update highlighted mods
+  selectionModel()->selectionChanged({}, {});
 }
 
 int PluginListView::sortColumn() const
@@ -59,10 +69,12 @@ void PluginListView::updatePluginCount()
   int activeMasterCount       = 0;
   int activeMediumMasterCount = 0;
   int activeLightMasterCount  = 0;
+  int activeBlueprintCount    = 0;
   int activeRegularCount      = 0;
   int masterCount             = 0;
   int mediumMasterCount       = 0;
   int lightMasterCount        = 0;
+  int blueprintCount          = 0;
   int regularCount            = 0;
   int activeVisibleCount      = 0;
 
@@ -89,37 +101,68 @@ void PluginListView::updatePluginCount()
       activeRegularCount += active;
       activeVisibleCount += visible && active;
     }
+
+    if (list->isBlueprintFlagged(plugin)) {
+      // separate if-statement because blueprint masters are also counted as
+      // (medium/light) masters
+      blueprintCount++;
+      activeBlueprintCount += active;
+    }
   }
 
   int activeCount = activeMasterCount + activeMediumMasterCount +
                     activeLightMasterCount + activeRegularCount;
   int totalCount = masterCount + mediumMasterCount + lightMasterCount + regularCount;
 
-  ui.counter->display(activeVisibleCount);
-  ui.counter->setToolTip(
+  auto toolTip =
       tr("<table cellspacing=\"6\">"
          "<tr><th>Type</th><th>Active      </th><th>Total</th></tr>"
          "<tr><td>All plugins:</td><td align=right>%1    </td><td "
          "align=right>%2</td></tr>"
          "<tr><td>ESMs:</td><td align=right>%3    </td><td align=right>%4</td></tr>"
-         "<tr><td>ESPs:</td><td align=right>%7    </td><td align=right>%8</td></tr>"
-         "<tr><td>ESMs+ESPs:</td><td align=right>%9    </td><td "
-         "align=right>%10</td></tr>"
-         "<tr><td>ESHs:</td><td align=right>%11   </td><td align=right>%12</td></tr>"
-         "<tr><td>ESLs:</td><td align=right>%5    </td><td align=right>%6</td></tr>"
-         "</table>")
+         "<tr><td>ESPs:</td><td align=right>%5    </td><td align=right>%6</td></tr>"
+         "<tr><td>ESMs+ESPs:</td><td align=right>%7    </td><td "
+         "align=right>%8</td></tr>")
           .arg(activeCount)
           .arg(totalCount)
           .arg(activeMasterCount)
           .arg(masterCount)
-          .arg(activeLightMasterCount)
-          .arg(lightMasterCount)
           .arg(activeRegularCount)
           .arg(regularCount)
           .arg(activeMasterCount + activeRegularCount)
-          .arg(masterCount + regularCount)
-          .arg(activeMediumMasterCount)
-          .arg(mediumMasterCount));
+          .arg(masterCount + regularCount);
+
+  auto gamePlugins = m_core->gameFeatures().gameFeature<GamePlugins>();
+  const bool lightPluginsAreSupported =
+      gamePlugins ? gamePlugins->lightPluginsAreSupported() : false;
+  const bool mediumPluginsAreSupported =
+      gamePlugins ? gamePlugins->mediumPluginsAreSupported() : false;
+  const bool blueprintPluginsAreSupported =
+      gamePlugins ? gamePlugins->blueprintPluginsAreSupported() : false;
+
+  if (mediumPluginsAreSupported) {
+    toolTip +=
+        tr("<tr><td>ESHs:</td><td align=right>%1   </td><td align=right>%2</td></tr>")
+            .arg(activeMediumMasterCount)
+            .arg(mediumMasterCount);
+  }
+  if (lightPluginsAreSupported) {
+    toolTip +=
+        tr("<tr><td>ESLs:</td><td align=right>%1    </td><td align=right>%2</td></tr>")
+            .arg(activeLightMasterCount)
+            .arg(lightMasterCount);
+  }
+  if (blueprintPluginsAreSupported) {
+    toolTip += tr("<tr><td>Blueprint masters:</td><td align=right>%1    </td><td "
+                  "align=right>%2</td></tr>")
+                   .arg(activeBlueprintCount)
+                   .arg(blueprintCount);
+  }
+
+  toolTip += "</table>";
+
+  ui.counter->display(activeVisibleCount);
+  ui.counter->setToolTip(toolTip);
 }
 
 void PluginListView::onFilterChanged(const QString& filter)
@@ -225,15 +268,26 @@ void PluginListView::setup(OrganizerCore& core, MainWindow* mw, Ui::MainWindow* 
           &PluginListSortProxy::updateFilter);
   connect(ui.filter, &QLineEdit::textChanged, this, &PluginListView::onFilterChanged);
 
-  // highligth mod list when selected
-  connect(selectionModel(), &QItemSelectionModel::selectionChanged,
-          [=](auto&& selected) {
-            std::vector<unsigned int> pluginIndices;
-            for (auto& idx : indexViewToModel(selectionModel()->selectedRows())) {
-              pluginIndices.push_back(idx.row());
-            }
-            mwui->modList->setHighlightedMods(pluginIndices);
-          });
+  // highlight mod list when selected
+  connect(selectionModel(), &QItemSelectionModel::selectionChanged, [=] {
+    std::set<QString> mods;
+    auto& directoryEntry = *m_core->directoryStructure();
+    auto pluginIndices   = indexViewToModel(selectionModel()->selectedRows());
+    for (auto& idx : pluginIndices) {
+      QString pluginName = m_core->pluginList()->getName(idx.row());
+
+      const MOShared::FileEntryPtr fileEntry =
+          directoryEntry.findFile(pluginName.toStdWString());
+      if (fileEntry.get() != nullptr) {
+        QString originName = QString::fromStdWString(
+            directoryEntry.getOriginByID(fileEntry->getOrigin()).getName());
+        mods.insert(originName);
+      }
+    }
+    mwui->modList->setHighlightedMods(mods);
+    m_core->pluginList()->highlightMasters(pluginIndices);
+    verticalScrollBar()->repaint();
+  });
 
   // using a lambda here to avoid storing the mod list actions
   connect(this, &QTreeView::customContextMenuRequested, [=](auto&& pos) {
